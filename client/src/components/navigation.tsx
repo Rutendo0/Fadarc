@@ -1,11 +1,21 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, Phone } from "lucide-react";
 import fadarcLogoPath from "@assets/image_1750836838385.png";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -24,60 +34,78 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-white/95 backdrop-blur-md shadow-professional-lg' 
+        : 'bg-white/90 backdrop-blur-sm'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
+          {/* Logo */}
           <div className="flex items-center">
             <img 
               src={fadarcLogoPath} 
               alt="Fadarc Motors Logo" 
-              className="h-10 w-auto"
+              className="h-12 w-auto cursor-pointer transition-transform hover:scale-105"
+              onClick={() => scrollToSection('home')}
             />
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {navItems.map((item) => (
-                <button
-                  key={item.href}
-                  onClick={() => scrollToSection(item.href)}
-                  className="text-fadarc-black hover:text-fadarc-red font-medium transition-colors"
-                >
-                  {item.label}
-                </button>
-              ))}
-              <Button 
-                onClick={() => scrollToSection("contact")}
-                className="bg-fadarc-red text-white px-4 py-2 rounded-lg font-medium hover:bg-fadarc-red-dark transition-colors"
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.href}
+                onClick={() => scrollToSection(item.href)}
+                className="text-fadarc-gray hover:text-fadarc-red font-medium transition-colors relative group"
               >
-                Get Quote
-              </Button>
+                {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-fadarc-red transition-all group-hover:w-full"></span>
+              </button>
+            ))}
+            
+            {/* Contact info */}
+            <div className="flex items-center text-fadarc-gray mr-4">
+              <Phone className="w-4 h-4 mr-2" />
+              <span className="font-medium">078 228 2444</span>
             </div>
+            
+            <Button 
+              onClick={() => scrollToSection("contact")}
+              className="btn-primary"
+            >
+              Get Quote
+            </Button>
           </div>
           
           {/* Mobile menu */}
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6 text-fadarc-black" />
+                <Button variant="ghost" size="icon" className="text-fadarc-gray hover:text-fadarc-red">
+                  <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent>
-                <div className="flex flex-col space-y-4 mt-6">
+              <SheetContent className="bg-white">
+                <div className="flex flex-col space-y-6 mt-8">
                   {navItems.map((item) => (
                     <button
                       key={item.href}
                       onClick={() => scrollToSection(item.href)}
-                      className="text-left text-fadarc-black hover:text-fadarc-red font-medium transition-colors py-2"
+                      className="text-left text-fadarc-gray hover:text-fadarc-red font-medium transition-colors py-2 text-lg"
                     >
                       {item.label}
                     </button>
                   ))}
+                  
+                  <div className="flex items-center text-fadarc-gray py-2">
+                    <Phone className="w-4 h-4 mr-2" />
+                    <span className="font-medium">078 228 2444</span>
+                  </div>
+                  
                   <Button 
                     onClick={() => scrollToSection("contact")}
-                    className="bg-fadarc-red text-white rounded-lg font-medium hover:bg-fadarc-red-dark transition-colors mt-4"
+                    className="btn-primary w-full mt-6"
                   >
                     Get Quote
                   </Button>

@@ -6,7 +6,6 @@ import partsSupplyPath from "@assets/image2.jpg";
 export default function ServicesSection() {
   const services = [
     {
-  
       title: "Hybrid Battery Replacement",
       description: "Genuine Toyota hybrid batteries for Aqua, Camry, Alphard, Sienta, Auris, CHR and more.",
       features: [
@@ -14,10 +13,9 @@ export default function ServicesSection() {
         "Honda Vezel, GP5, GP6, GP7",
         "Nissan X-Trail T32, Note 2019"
       ],
-      image: toyotaPartsPath
+      image: "/attached_assets/image.jpg"
     },
     {
-      
       title: "Professional Installation",
       description: "Expert technicians providing professional hybrid battery installation and system diagnostics.",
       features: [
@@ -25,10 +23,9 @@ export default function ServicesSection() {
         "Diagnostic testing included",
         "Quality guarantee"
       ],
-      image: diagnosticsPath
+      image: "/attached_assets/image1.jpg"
     },
     {
-     
       title: "Genuine Parts Supply",
       description: "Authentic Toyota, Honda, and Nissan hybrid parts with fast delivery across Zimbabwe.",
       features: [
@@ -36,7 +33,7 @@ export default function ServicesSection() {
         "Competitive pricing",
         "Harare & Bulawayo delivery"
       ],
-      image: partsSupplyPath
+      image: "/attached_assets/image2.jpg"
     }
   ];
 
@@ -52,10 +49,10 @@ export default function ServicesSection() {
             Complete hybrid battery solutions with genuine parts and expert installation
           </p>
         </div>
-        
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.map((service, index) => {
-      
+
             return (
               <Card key={index} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-0 hover:-translate-y-2">
                 <div className="relative overflow-hidden">
